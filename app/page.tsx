@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { supabase } from '@/lib/supabase';
 
 export default function Home() {
   const [formData, setFormData] = useState({
@@ -12,12 +13,13 @@ export default function Home() {
   const [result, setResult] = useState<{ story: string; imageUrl: string } | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setResult(null);
 
     try {
+      // 1. API'den hikayeyi üret
       const response = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -25,9 +27,26 @@ export default function Home() {
       });
       
       const data = await response.json();
+      
+      // 2. Supabase'e Kaydet (YENİ KISIM)
+      if (data.story && data.imageUrl) {
+        const { error } = await supabase
+          .from('stories')
+          .insert([
+            { 
+              child_name: formData.childName, 
+              story_text: data.story, 
+              image_url: data.imageUrl 
+            },
+          ]);
+          
+        if (error) console.error("Kaydetme hatası:", error);
+      }
+
       setResult(data);
     } catch (err) {
       alert("Bir hata oluştu!");
+      console.error(err);
     } finally {
       setLoading(false);
     }
