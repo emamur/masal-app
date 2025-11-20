@@ -12,7 +12,7 @@ export async function POST(request: Request) {
     // URL içindeki boşlukları %20 formatına çeviriyoruz
     const encodedStoryPrompt = encodeURIComponent(storyPrompt);
     
-    // Fetch isteği atıyoruz
+    // Fetch isteği atıyoruzds
     const storyResponse = await fetch(`https://text.pollinations.ai/${encodedStoryPrompt}`);
     
     if (!storyResponse.ok) {
