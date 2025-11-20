@@ -7,7 +7,7 @@ export async function POST(request: Request) {
 
     // 1. HİKAYE ÜRETİMİ (Anahtarsız - Pollinations Text API)
     // URL üzerinden prompt gönderip cevabı text olarak alıyoruz.
-    const storyPrompt = `Bana bir masal yaz. Kahraman: ${childName} adında bir ${gender}. Oyuncak: ${toy}. Ders: ${lesson}. Hikaye Türkçe olsun, 3 kısa paragraf olsun ve masal başlığı ile başlasın.`;
+    const storyPrompt = `Bana bir masal yaz. Kahraman: ${childName} adında bir ${gender}. Oyuncak: ${toy}. Ders: ${lesson}. Hikaye Türkçe olsun, uzun olsun ve masal başlığı ile başlasın.`;
     
     // URL içindeki boşlukları %20 formatına çeviriyoruz
     const encodedStoryPrompt = encodeURIComponent(storyPrompt);
